@@ -26,6 +26,15 @@ function randomizeArray(arr) {
     return randArray;
 }
   
+function createPassword() {
+  while (passOptions() == false);
+  console.log(length);
+
+ var password = genPassword();
+
+  writePassword(password);
+}
+
 function writePassword(pw) {
   var passwordText = document.querySelector("#password");
   passwordText.value = pw;
@@ -33,65 +42,63 @@ function writePassword(pw) {
  
 
 function passOptions() {
-  length = parseInt(prompt('How many characters would you like your password to be?')
+  length = parseInt(prompt('How many characters would you like your password to be? (8-128)')
   ); 
-
-   console.log(length)
+ console.log(length)
 
  if (Number.isNaN(length)) {
-      alert("Not a number");
+      alert("Please choose a number between 8 and 128");
       return false; 
      } 
 
-  //    // length of password 8-128
+  // length of password 8-128
     
      if (length < 8) {
-       alert('Length must be more than 8');
+       alert("Password must be at least 8 characters");
        return false;
      }
     
      if (length > 128) {
-       alert('password length must be less than 128');
+       alert('Password must be less than 128 characters');
       return false;
      }
 
-  var input = prompt("Do you want Numbers?");
+  var input = prompt("Would you like to include Numbers? If so type y");
 
     if (input == "y") {
       hasNumbers = true;
-     }
+    }
 
-    input = prompt("Do you want Lower Case Letters?");
+    input = prompt("Would you like to include Lower Case Letters? If so type y");
 
     if (input == "y") {
       hasLowerCase = true;
-    }
+      }
    
-    input = prompt("Do you want Upper Case Letters?");
+    input = prompt("Would you like to include Upper Case Letters? If so type y");
 
     if (input == "y") {
       hasUpperCase = true;
-    }
-    input = prompt("Do you want Special Characters?");
+       }
+    
+    input = prompt("Would you like to include Special Characters? If so type y");
 
     if (input == "y") {
       hasSpecChar = true;
-    }
-  
+       }
+    
     if (
-      hasLowerCase === false &&
-      hasUpperCase === false &&
-      hasSpecChar === false &&
-      hasNumbers === false
+      hasLowerCase == false &&
+      hasUpperCase == false &&
+      hasSpecChar == false &&
+      hasNumbers == false
       ) {
-       alert("Must choose one char type");
+       alert("You must select at least one character type");
        return false;
      }
      
     return true;
   }
-
-  
   
   //object to store user inputs
   var userOptions = {
@@ -102,8 +109,6 @@ function passOptions() {
     hasNumbers: hasNumbers
   };
   
-   
-
 function genPassword() {
   var possibleChar = []
 
@@ -135,15 +140,6 @@ console.log(possibleChar);
   console.log(password);
 
   return password;
-}
-
-function createPassword() {
-  while (passOptions() == false);
-  console.log(length);
-
- var password = genPassword();
-
-  writePassword(password);
 }
 
 var generateBtn = document.querySelector("#generate");
