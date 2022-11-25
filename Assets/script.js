@@ -27,7 +27,8 @@ function randomizeArray(arr) {
 }
   
 function writePassword(pw) {
-  var passwordText = document.querySelector("#password");passwordText.value = pw;
+  var passwordText = document.querySelector("#password");
+  passwordText.value = pw;
 }
  
 
@@ -136,16 +137,16 @@ console.log(possibleChar);
   return password;
 }
 
-while (passOptions() == false);
-
+function createPassword() {
+  while (passOptions() == false);
   console.log(length);
 
  var password = genPassword();
 
-writePassword(password);
-
+  writePassword(password);
+}
 
 var generateBtn = document.querySelector("#generate");
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", createPassword);
