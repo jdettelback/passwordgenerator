@@ -8,12 +8,16 @@ var specChar = "!,@,#,$,%,^,&,*,(,),_+,-,=,/,[,],{,},;,',:,?,|,<,>,+".split(',')
 var number = '1,2,3,4,5,6,7,8,9,0'.split(',');
 
 // create function to prompt user for password parameters
-var length;
 var randomI;
-var hasNumbers = false;
-var hasLowerCase = false;
-var hasUpperCase = false;
-var hasSpecChar = false;
+
+// object to store user responses
+var userOptions = {
+  length: 0,
+  hasNumbers: false,
+  hasLowerCase: false,
+  hasUpperCase: false,
+  hasSpecChar: false,
+}
 
 // this function randomizes any array and returns a copy of the randomized array
 function randomizeArray(arr) {
@@ -25,7 +29,7 @@ function randomizeArray(arr) {
     }
     return randArray;
 }
-  
+// this function creates password from pool of possible characters
 function createPassword() {
   while (passOptions() == false);
   console.log(length);
@@ -35,30 +39,38 @@ function createPassword() {
   writePassword(password);
 }
 
+// this function writes password to screen
 function writePassword(pw) {
   var passwordText = document.querySelector("#password");
   passwordText.value = pw;
 }
  
-
+// this functions takes user inputs to create pool of possible characters for password
 function passOptions() {
-  length = parseInt(prompt('How many characters would you like your password to be? (8-128)')
-  ); 
- console.log(length)
 
- if (Number.isNaN(length)) {
+  userOptions.length = 0,
+  userOptions.hasNumbers = false,
+  userOptions.hasLowerCase = false,
+  userOptions.hasUpperCase = false,
+  userOptions.hasSpecChar = false
+
+  userOptions.length = parseInt(prompt('How many characters would you like your password to be? (8-128)')
+  ); 
+ console.log(userOptions.length)
+
+ if (Number.isNaN(userOptions.length)) {
       alert("Please choose a number between 8 and 128");
       return false; 
      } 
 
   // length of password 8-128
     
-     if (length < 8) {
+     if (userOptions.length < 8) {
        alert("Password must be at least 8 characters");
        return false;
      }
     
-     if (length > 128) {
+     if (userOptions.length > 128) {
        alert('Password must be less than 128 characters');
       return false;
      }
@@ -66,32 +78,33 @@ function passOptions() {
   var input = prompt("Would you like to include Numbers? If so type y");
 
     if (input == "y") {
-      hasNumbers = true;
+      userOptions.hasNumbers = true;
     }
 
     input = prompt("Would you like to include Lower Case Letters? If so type y");
 
     if (input == "y") {
-      hasLowerCase = true;
+      userOptions.hasLowerCase = true;
       }
    
     input = prompt("Would you like to include Upper Case Letters? If so type y");
 
     if (input == "y") {
-      hasUpperCase = true;
+      userOptions.hasUpperCase = true;
        }
     
     input = prompt("Would you like to include Special Characters? If so type y");
 
     if (input == "y") {
-      hasSpecChar = true;
+      userOptions.hasSpecChar = true;
        }
     
+    // check for validity of user responses
     if (
-      hasLowerCase == false &&
-      hasUpperCase == false &&
-      hasSpecChar == false &&
-      hasNumbers == false
+      userOptions.hasLowerCase == false &&
+      userOptions.hasUpperCase == false &&
+      userOptions.hasSpecChar == false &&
+      userOptions.hasNumbers == false
       ) {
        alert("You must select at least one character type");
        return false;
@@ -100,31 +113,24 @@ function passOptions() {
     return true;
   }
   
-  //object to store user inputs
-  var userOptions = {
-    length: length,
-    hasLowerCase: hasLowerCase,
-    hasUpperCase: hasUpperCase,
-    hasSpecChar: hasSpecChar,
-    hasNumbers: hasNumbers
-  };
-  
+// this function randomizes the user selected character types to generate password
+
 function genPassword() {
   var possibleChar = []
 
-  if (hasLowerCase == true) {
+  if (userOptions.hasLowerCase == true) {
     possibleChar = possibleChar.concat(randomizeArray(lowerCase));
   }
   
-  if (hasNumbers == true) {
+  if (userOptions.hasNumbers == true) {
     possibleChar = possibleChar.concat(randomizeArray(number));
   }
 
-  if (hasUpperCase == true) {
+  if (userOptions.hasUpperCase == true) {
      possibleChar = possibleChar.concat(randomizeArray(upperCase));
   }
 
-   if (hasSpecChar == true) {
+   if (userOptions.hasSpecChar == true) {
      possibleChar = possibleChar.concat(randomizeArray(specChar));
   }
 
@@ -133,7 +139,7 @@ function genPassword() {
 console.log(possibleChar);
 
   var password = "";
-  for (c=0; c<length; c++) {
+  for (c=0; c<userOptions.length; c++) {
     var randomI = Math.floor(Math.random() * possibleChar.length);
     password = password + possibleChar[randomI];
   }
