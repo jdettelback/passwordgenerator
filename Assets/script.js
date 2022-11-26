@@ -13,10 +13,10 @@ var randomI;
 // object to store user responses
 var userOptions = {
   length: 0,
-  hasNumbers: false,
-  hasLowerCase: false,
   hasUpperCase: false,
+  hasLowerCase: false,
   hasSpecChar: false,
+  hasNumbers: false,
 }
 
 // this function randomizes any array and returns a copy of the randomized array
@@ -36,6 +36,10 @@ function createPassword() {
 
  var password = genPassword();
 
+ while (verifyPassword(password) == false) {
+  console.log("invalid-retrying")
+  password = genPassword();
+ }
   writePassword(password);
 }
 
@@ -49,10 +53,10 @@ function writePassword(pw) {
 function passOptions() {
 
   userOptions.length = 0,
-  userOptions.hasNumbers = false,
-  userOptions.hasLowerCase = false,
   userOptions.hasUpperCase = false,
-  userOptions.hasSpecChar = false
+  userOptions.hasLowerCase = false,
+  userOptions.hasSpecChar = false,
+  userOptions.hasNumbers = false,
 
   userOptions.length = parseInt(prompt('How many characters would you like your password to be? (8-128)')
   ); 
@@ -75,34 +79,37 @@ function passOptions() {
       return false;
      }
 
-  var input = prompt("Would you like to include Numbers? If so type y");
+  var input = prompt("Would you like to include Upper Case Letters? If so type y");
 
-    if (input == "y") {
-      userOptions.hasNumbers = true;
-    }
-
+  if (input == "y") {
+      userOptions.hasUpperCase = true;
+     }
+ 
     input = prompt("Would you like to include Lower Case Letters? If so type y");
 
     if (input == "y") {
       userOptions.hasLowerCase = true;
       }
    
-    input = prompt("Would you like to include Upper Case Letters? If so type y");
-
-    if (input == "y") {
-      userOptions.hasUpperCase = true;
-       }
-    
+     
     input = prompt("Would you like to include Special Characters? If so type y");
 
     if (input == "y") {
       userOptions.hasSpecChar = true;
        }
+
+    input = prompt("Would you like to include Numbers? If so type y");
+
+    if (input == "y") {
+      userOptions.hasNumbers = true;
+    }
+
+    
     
     // check for validity of user responses
     if (
-      userOptions.hasLowerCase == false &&
       userOptions.hasUpperCase == false &&
+      userOptions.hasLowerCase == false &&
       userOptions.hasSpecChar == false &&
       userOptions.hasNumbers == false
       ) {
@@ -118,20 +125,20 @@ function passOptions() {
 function genPassword() {
   var possibleChar = []
 
-  if (userOptions.hasLowerCase == true) {
+  if (userOptions.hasUpperCase == true) {
+    possibleChar = possibleChar.concat(randomizeArray(upperCase));
+ }
+  
+ if (userOptions.hasLowerCase == true) {
     possibleChar = possibleChar.concat(randomizeArray(lowerCase));
+  }
+  
+   if (userOptions.hasSpecChar == true) {
+     possibleChar = possibleChar.concat(randomizeArray(specChar));
   }
   
   if (userOptions.hasNumbers == true) {
     possibleChar = possibleChar.concat(randomizeArray(number));
-  }
-
-  if (userOptions.hasUpperCase == true) {
-     possibleChar = possibleChar.concat(randomizeArray(upperCase));
-  }
-
-   if (userOptions.hasSpecChar == true) {
-     possibleChar = possibleChar.concat(randomizeArray(specChar));
   }
 
   possibleChar = randomizeArray(possibleChar)
@@ -146,6 +153,61 @@ console.log(possibleChar);
   console.log(password);
 
   return password;
+}
+
+function notContainsUpperCase(pa) {
+  for (n=0; n<pa.length; n++) {
+   if (upperCase.includes(pa[n]))
+    return false;
+  }
+  return true;
+}
+
+function notContainsLowerCase(pa) {
+  for (n=0; n<pa.length; n++) {
+    if (lowerCase.includes(pa[n]))
+    return false;
+  }
+  return true;
+}
+
+function notContainsSpecChar(pa) {
+  for (n=0; n<pa.length; n++) {
+    if (specChar.includes(pa[n]))
+    return false;
+  }
+  return true;
+}
+
+function notContainsNumbers(pa) {
+  for (n=0; n<pa.length; n++) {
+    if (number.includes(pa[n]))
+    return false;
+  }
+  return true;
+}
+
+function verifyPassword(pw) {
+  passwordArray = pw.split("");
+
+  if (userOptions.hasUpperCase && notContainsUpperCase(passwordArray)) {
+    return false;
+  }
+
+  if (userOptions.hasLowerCase && notContainsLowerCase(passwordArray)) {
+    return false;
+  }
+
+  if (userOptions.hasSpecChar && notContainsSpecChar(passwordArray)) {
+    return false;
+  }
+
+  if (userOptions.hasNumbers && notContainsNumbers(passwordArray)) {
+    return false;
+  }
+
+  return true;
+
 }
 
 var generateBtn = document.querySelector("#generate");
