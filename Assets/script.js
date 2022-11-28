@@ -31,7 +31,8 @@ function randomizeArray(arr) {
 // This function creates password from array of possible characters
 function createPassword() {
   while (passOptions() == false);
-  console.log(length);
+
+//  console.log(length);
 
  var password = genPassword();
 
@@ -60,7 +61,7 @@ function passOptions() {
 
   userOptions.length = parseInt(prompt('How many characters would you like your password to be? (8-128)')
   ); 
- console.log(userOptions.length)
+ // console.log(userOptions.length)
 
  if (Number.isNaN(userOptions.length)) {
       alert("Please choose a number between 8 and 128");
@@ -141,14 +142,14 @@ function genPassword() {
 
   possibleChar = randomizeArray(possibleChar)
 
-console.log(possibleChar);
+// console.log(possibleChar);
 
 var password = "";
   for (c=0; c<userOptions.length; c++) {
     var randomI = Math.floor(Math.random() * possibleChar.length);
     password = password + possibleChar[randomI];
   }
-  console.log(password);
+//  console.log(password);
 
   return password;
 }
