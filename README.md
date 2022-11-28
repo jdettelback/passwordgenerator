@@ -5,3 +5,5 @@
 ### There are checks in place to ensure that the password is randomized but includes at least one character from each selected type. This is particularly important if a shorter length password is chosen.
 
 ![screenshot](https://raw.githubusercontent.com/jdettelback/passwordgenerator/main/Assets/passgenscreenshot.png)
+
+https://jdettelback.github.io/passwordgenerator/
