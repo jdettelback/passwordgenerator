@@ -1,16 +1,15 @@
-// Assignment Code
+// Assignment Code for Password Generator
 
-//defining variables for password
+// Defining variables for password
 
 var upperCase = 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'.split(',');
 var lowerCase = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'.split(',');
 var specChar = "!,@,#,$,%,^,&,*,(,),_+,-,=,/,[,],{,},;,',:,?,|,<,>,+".split(',');
 var number = '1,2,3,4,5,6,7,8,9,0'.split(',');
 
-// create function to prompt user for password parameters
 var randomI;
 
-// object to store user responses
+// Object to store user responses
 var userOptions = {
   length: 0,
   hasUpperCase: false,
@@ -19,7 +18,7 @@ var userOptions = {
   hasNumbers: false,
 }
 
-// this function randomizes any array and returns a copy of the randomized array
+// This function randomizes an array and returns a copy of the randomized array
 function randomizeArray(arr) {
   var randArray = [];
 
@@ -29,7 +28,7 @@ function randomizeArray(arr) {
     }
     return randArray;
 }
-// this function creates password from pool of possible characters
+// This function creates password from array of possible characters
 function createPassword() {
   while (passOptions() == false);
   console.log(length);
@@ -43,13 +42,14 @@ function createPassword() {
   writePassword(password);
 }
 
-// this function writes password to screen
+// This function writes password to screen
 function writePassword(pw) {
   var passwordText = document.querySelector("#password");
   passwordText.value = pw;
 }
  
-// this functions takes user inputs to create pool of possible characters for password
+// This functions takes user inputs to create pool of possible characters for password
+
 function passOptions() {
 
   userOptions.length = 0,
@@ -67,7 +67,7 @@ function passOptions() {
       return false; 
      } 
 
-  // length of password 8-128
+  // Length of password must be between 8-128
     
      if (userOptions.length < 8) {
        alert("Password must be at least 8 characters");
@@ -75,7 +75,7 @@ function passOptions() {
      }
     
      if (userOptions.length > 128) {
-       alert('Password must be less than 128 characters');
+       alert('Password cannot be longer than 128 characters');
       return false;
      }
 
@@ -104,9 +104,7 @@ function passOptions() {
       userOptions.hasNumbers = true;
     }
 
-    
-    
-    // check for validity of user responses
+    // Check for validity of user responses ie make sure user selected at least one
     if (
       userOptions.hasUpperCase == false &&
       userOptions.hasLowerCase == false &&
@@ -120,7 +118,7 @@ function passOptions() {
     return true;
   }
   
-// this function randomizes the user selected character types to generate password
+// This function randomizes the user selected character types to generate password
 
 function genPassword() {
   var possibleChar = []
@@ -145,7 +143,7 @@ function genPassword() {
 
 console.log(possibleChar);
 
-  var password = "";
+var password = "";
   for (c=0; c<userOptions.length; c++) {
     var randomI = Math.floor(Math.random() * possibleChar.length);
     password = password + possibleChar[randomI];
@@ -154,34 +152,35 @@ console.log(possibleChar);
 
   return password;
 }
+// The following functions make sure that if a type of character was selected, there is at least one of that type in the final password
 
-function notContainsUpperCase(pa) {
-  for (n=0; n<pa.length; n++) {
-   if (upperCase.includes(pa[n]))
+function notContainsUpperCase(pass) {
+  for (n=0; n<pass.length; n++) {
+   if (upperCase.includes(pass[n]))
     return false;
   }
   return true;
 }
 
-function notContainsLowerCase(pa) {
-  for (n=0; n<pa.length; n++) {
-    if (lowerCase.includes(pa[n]))
+function notContainsLowerCase(pass) {
+  for (n=0; n<pass.length; n++) {
+    if (lowerCase.includes(pass[n]))
     return false;
   }
   return true;
 }
 
-function notContainsSpecChar(pa) {
-  for (n=0; n<pa.length; n++) {
-    if (specChar.includes(pa[n]))
+function notContainsSpecChar(pass) {
+  for (n=0; n<pass.length; n++) {
+    if (specChar.includes(pass[n]))
     return false;
   }
   return true;
 }
 
-function notContainsNumbers(pa) {
-  for (n=0; n<pa.length; n++) {
-    if (number.includes(pa[n]))
+function notContainsNumbers(pass) {
+  for (n=0; n<pass.length; n++) {
+    if (number.includes(pass[n]))
     return false;
   }
   return true;
